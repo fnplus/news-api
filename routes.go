@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"gopkg.in/labstack/echo.v3"
+	"github.com/labstack/echo"
 )
 
 func ping(c echo.Context) error {
