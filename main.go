@@ -1,18 +1,11 @@
 package main
 
-import (
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-)
+import "github.com/fnplus/api-news-curator/curator"
 
 func main() {
-	e := echo.New()
+	worker := curator.NewWorker("3111edae78f6492983bd0a6df945356e") // Change API key
+	runWorker(worker)
+}
 
-	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "method=${method}, uri=${uri}, status=${status}\n",
-	}))
-
-	e.GET("/api/v1/ping", ping)
-
-	e.Logger.Fatal(e.Start(":1323"))
+func runWorker(worker curator.IWorker) {
 }

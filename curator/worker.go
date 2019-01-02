@@ -10,6 +10,7 @@ import (
 // the data store
 type IWorker interface {
 	GetNewsWithKeywords(keywords string) ([]newsapi.Article, error)
+	PushToDB()
 }
 
 // NewWorker creates a new instance of iWorker
@@ -25,7 +26,7 @@ type Worker struct {
 // GetNewsWithKeywords gets the news from the newsapi source, for the given
 // keywords
 func (w *Worker) GetNewsWithKeywords(keywords string) ([]newsapi.Article, error) {
-	client := newsapi.NewClient(w.newsAPIKey) // Change API key
+	client := newsapi.NewClient(w.newsAPIKey)
 	ar, err := client.GetEverything(context.Background(), &newsapi.EverythingParameters{
 		Keywords: keywords,
 		Language: "en",
@@ -35,3 +36,6 @@ func (w *Worker) GetNewsWithKeywords(keywords string) ([]newsapi.Article, error)
 	}
 	return ar.Articles, nil
 }
+
+// PushToDB pushes the given news article(s) to the firebase firestore
+func (w *Worker) PushToDB() {}
