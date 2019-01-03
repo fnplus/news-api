@@ -1,2 +1,2 @@
-# api-news-curator
-An API to fetch &amp; curate all the news relevant news content from the web
+# community-news-bot
+A bot/worker/cron/process to fetch &amp; curate all the relevant news content from the web.
