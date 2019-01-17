@@ -1,5 +1,9 @@
 package datastore
 
+import (
+	"github.com/barthr/newsapi"
+)
+
 // Client is an interface to interact with the firebase firestore
 type Client interface {
 	init() error
@@ -9,16 +13,13 @@ type Client interface {
 
 // NewsItem is a modle of the news item in the database
 type NewsItem struct {
-	Title   string `json:"title"`
-	Source  string `json:"source"`
-	Author  string `json:"author"`
-	URL     string `json:"url"`
-	Content string `json:"content"`
+	Item    newsapi.Article `json:"item"`
+	Keyword string          `json:"keyword"`
 }
 
 // NewClient creates a new instance of the client
 func NewClient() Client {
-	var firestoreClient *FirestoreClient
+	var firestoreClient = FirestoreClient{nil}
 	firestoreClient.init()
-	return firestoreClient
+	return &firestoreClient
 }

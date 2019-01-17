@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"context"
+	"strings"
 
 	"firebase.google.com/go"
 	"google.golang.org/api/option"
@@ -42,7 +43,7 @@ func (fc *FirestoreClient) GetKeywordPool() ([]string, error) {
 	}
 
 	for _, word := range keywordSnap.([]interface{}) {
-		keywords = append(keywords, word.(string))
+		keywords = append(keywords, strings.TrimSpace(word.(string)))
 	}
 	return keywords, nil
 }
@@ -53,6 +54,7 @@ func (fc *FirestoreClient) AddNewsItems(newsItems []NewsItem) error {
 	if err != nil {
 		return err
 	}
+	defer cl.Close()
 
 	ref := cl.Collection("community-news/news/items")
 	for _, nItem := range newsItems {

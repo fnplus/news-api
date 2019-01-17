@@ -1,7 +1,9 @@
-package curator
+package main
 
 import (
 	"context"
+
+	"github.com/fnplus/community-news-bot/datastore"
 
 	"github.com/barthr/newsapi"
 )
@@ -10,7 +12,7 @@ import (
 // the data store
 type IWorker interface {
 	GetNewsWithKeywords(keywords string) ([]newsapi.Article, error)
-	PushToDB()
+	PushToDB([]datastore.NewsItem) error
 }
 
 // NewWorker creates a new instance of iWorker
@@ -38,4 +40,7 @@ func (w *Worker) GetNewsWithKeywords(keywords string) ([]newsapi.Article, error)
 }
 
 // PushToDB pushes the given news article(s) to the firebase firestore
-func (w *Worker) PushToDB() {}
+func (w *Worker) PushToDB(newsItems []datastore.NewsItem) error {
+	client := datastore.NewClient()
+	return client.AddNewsItems(newsItems)
+}

@@ -48,16 +48,13 @@ func TestFirestoreClient_AddNewsItems(t *testing.T) {
 	cl := FirestoreClient{}
 	cl.init()
 
-	nItem1 := NewsItem{
-		Title:  "sample-title",
-		Source: "TC",
-	}
-	nItem2 := NewsItem{
-		Title:  "sample-title",
-		Source: "TC",
+	newsitems := []NewsItem{
+		NewsItem{Keyword: "sample-title-1"},
+		NewsItem{Keyword: "sample-title-2"},
+		NewsItem{Keyword: "sample-title-3"},
 	}
 
-	err := cl.AddNewsItems([]NewsItem{nItem1, nItem2})
+	err := cl.AddNewsItems(newsitems)
 	if err != nil {
 		t.Fatalf("Error: %s", err.Error())
 	}
