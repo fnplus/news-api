@@ -29,6 +29,7 @@ func (fc *FirestoreClient) GetKeywordPool() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer cl.Close()
 
 	snap, err := cl.Collection("community-news").Doc("keyword-pool").Get(context.Background())
 	if err != nil {
@@ -48,5 +49,14 @@ func (fc *FirestoreClient) GetKeywordPool() ([]string, error) {
 
 // AddNewsItems add a list of news items to the database
 func (fc *FirestoreClient) AddNewsItems(newsItems []NewsItem) error {
+	cl, err := fc.app.Firestore(context.Background())
+	if err != nil {
+		return err
+	}
+
+	ref := cl.Collection("community-news/news/items")
+	for _, nItem := range newsItems {
+		ref.Add(context.Background(), nItem)
+	}
 	return nil
 }

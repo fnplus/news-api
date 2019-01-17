@@ -43,3 +43,22 @@ func TestFirestoreClient_GetKeywordPool(t *testing.T) {
 	}
 	fmt.Println(pool)
 }
+
+func TestFirestoreClient_AddNewsItems(t *testing.T) {
+	cl := FirestoreClient{}
+	cl.init()
+
+	nItem1 := NewsItem{
+		Title:  "sample-title",
+		Source: "TC",
+	}
+	nItem2 := NewsItem{
+		Title:  "sample-title",
+		Source: "TC",
+	}
+
+	err := cl.AddNewsItems([]NewsItem{nItem1, nItem2})
+	if err != nil {
+		t.Fatalf("Error: %s", err.Error())
+	}
+}
