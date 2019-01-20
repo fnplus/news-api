@@ -6,9 +6,10 @@ import (
 	"github.com/fnplus/community-news-bot/datastore"
 )
 
+var sConfig = getConfig()
+
 func TestWorker_GetNewsWithKeywords(t *testing.T) {
-	apikey := "3111edae78f6492983bd0a6df945356e"
-	worker := NewWorker(apikey)
+	worker := NewWorker(sConfig.NewsAPIToken)
 	_, err := worker.GetNewsWithKeywords("golang")
 	if err != nil {
 		t.Fatalf("Test failed!\nError: %s", err.Error())
@@ -16,7 +17,7 @@ func TestWorker_GetNewsWithKeywords(t *testing.T) {
 }
 
 func TestWorker_PushToDB(t *testing.T) {
-	worker := NewWorker("3111edae78f6492983bd0a6df945356e")
+	worker := NewWorker(sConfig.NewsAPIToken)
 	newsitems := []datastore.NewsItem{
 		datastore.NewsItem{Keyword: "sample-title-1"},
 		datastore.NewsItem{Keyword: "sample-title-2"},

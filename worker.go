@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/fnplus/community-news-bot/datastore"
 
@@ -28,7 +29,7 @@ type Worker struct {
 // GetNewsWithKeywords gets the news from the newsapi source, for the given
 // keywords
 func (w *Worker) GetNewsWithKeywords(keywords string) ([]newsapi.Article, error) {
-	client := newsapi.NewClient(w.newsAPIKey)
+	client := newsapi.NewClient(w.newsAPIKey, newsapi.WithHTTPClient(http.DefaultClient))
 	ar, err := client.GetEverything(context.Background(), &newsapi.EverythingParameters{
 		Keywords: keywords,
 		Language: "en",

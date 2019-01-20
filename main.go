@@ -1,9 +1,12 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 	"strings"
 	"sync"
+
+	"gopkg.in/yaml.v2"
 
 	"github.com/fnplus/community-news-bot/datastore"
 )
@@ -12,10 +15,10 @@ var keywordPool []string
 var keywordQueue *Queue
 var wg sync.WaitGroup
 
-const maxNumberOfRoutines = 3
-
 func main() {
+	sConfig := getConfig()
 	storeClient := datastore.NewClient()
+
 	log.Println("Fetching keywords pool")
 	keywordPool, err := storeClient.GetKeywordPool()
 	if err != nil {
@@ -28,8 +31,8 @@ func main() {
 		keywordQueue.push(strings.TrimSpace(word))
 	}
 
-	for i := 0; i < maxNumberOfRoutines; i++ {
-		worker := NewWorker("3111edae78f6492983bd0a6df945356e")
+	for i := 0; i < sConfig.NumberOfWorkers; i++ {
+		worker := NewWorker(sConfig.NewsAPIToken)
 		wg.Add(1)
 		go runWorker(worker)
 	}
@@ -60,4 +63,23 @@ func runWorker(worker IWorker) {
 			log.Printf("Error: %s", err.Error())
 		}
 	}
+}
+
+type config struct {
+	NumberOfWorkers int    `yaml:"numberOfWorkers"`
+	NewsAPIToken    string `yaml:"newsAPIToken"`
+}
+
+func getConfig() *config {
+	contents, err := ioutil.ReadFile("config.yaml")
+	if err != nil {
+		log.Fatalf("Not able to read the config file. Error: %s", err.Error())
+	}
+
+	var sConfig config
+	err = yaml.Unmarshal(contents, &sConfig)
+	if err != nil {
+		log.Fatalf("Not able to parse the config file. Error: %s", err.Error())
+	}
+	return &sConfig
 }
