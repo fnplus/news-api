@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -9,5 +10,6 @@ func Test_cacheNews(t *testing.T) {
 }
 
 func Test_newsInCache(t *testing.T) {
-	newsInCache("test")
+	cache = []string{"tes", "Test"}
+	fmt.Println(newsInCache("testhh"))
 }

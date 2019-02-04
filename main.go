@@ -59,8 +59,8 @@ func runWorker(worker IWorker) {
 					finalNewsItems = append(finalNewsItems, datastore.NewsItem{
 						Item: n, Keyword: word,
 					})
-					titlesForCache += n.Title + "\n"
 				}
+				titlesForCache += n.Title + "\n"
 			}
 		}
 

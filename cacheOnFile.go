@@ -20,9 +20,12 @@ func fetchCache() {
 }
 
 func newsInCache(title string) bool {
+	title = strings.TrimSpace(title)
+	title = strings.ToLower(title)
 	for _, cTitle := range cache {
-		if strings.TrimSpace(cTitle) == strings.TrimSpace(title) {
-			fmt.Println(title, "\n----\n", cTitle)
+		cTitle = strings.TrimSpace(cTitle)
+		cTitle = strings.ToLower(cTitle)
+		if cTitle == title {
 			return true
 		}
 	}
