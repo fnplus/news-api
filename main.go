@@ -15,9 +15,12 @@ var keywordPool []string
 var keywordQueue *Queue
 var wg sync.WaitGroup
 
+var titlesForCache = ""
+
 func main() {
 	sConfig := getConfig()
 	storeClient := datastore.NewClient()
+	fetchCache()
 
 	log.Println("Fetching keywords pool")
 	keywordPool, err := storeClient.GetKeywordPool()
@@ -37,6 +40,7 @@ func main() {
 		go runWorker(worker)
 	}
 	wg.Wait()
+	cacheNews(titlesForCache)
 }
 
 func runWorker(worker IWorker) {
@@ -51,9 +55,12 @@ func runWorker(worker IWorker) {
 			log.Printf("Error: %s", err.Error())
 		} else {
 			for _, n := range newsItems {
-				finalNewsItems = append(finalNewsItems, datastore.NewsItem{
-					Item: n, Keyword: word,
-				})
+				if !newsInCache(n.Title) {
+					finalNewsItems = append(finalNewsItems, datastore.NewsItem{
+						Item: n, Keyword: word,
+					})
+					titlesForCache += n.Title + "\n"
+				}
 			}
 		}
 

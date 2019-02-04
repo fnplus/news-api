@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/fnplus/community-news-bot/datastore"
 
@@ -32,6 +33,8 @@ func (w *Worker) GetNewsWithKeywords(keywords string) ([]newsapi.Article, error)
 	client := newsapi.NewClient(w.newsAPIKey, newsapi.WithHTTPClient(http.DefaultClient))
 	ar, err := client.GetEverything(context.Background(), &newsapi.EverythingParameters{
 		Keywords: keywords,
+		From:     time.Now().Add(-time.Hour * 24),
+		To:       time.Now(),
 		Language: "en",
 	})
 	if err != nil {

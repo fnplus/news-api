@@ -14,5 +14,11 @@
 # firebase creds
 firebase-creds.json
 
-# build file
+# Build file
 community-news-bot
+
+# Deploy script
+deploy.sh
+
+# Cache files
+.newscache

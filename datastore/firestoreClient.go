@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"firebase.google.com/go"
@@ -62,3 +63,25 @@ func (fc *FirestoreClient) AddNewsItems(newsItems []NewsItem) error {
 	}
 	return nil
 }
+
+// CacheNewsTitle to the database
+func (fc *FirestoreClient) CacheNewsTitle(titles []string) error {
+	cl, err := fc.app.Firestore(context.Background())
+	if err != nil {
+		return err
+	}
+	defer cl.Close()
+
+	ref := cl.Collection("community-news/title-cache/")
+	for _, title := range titles {
+		_, _, err := ref.Add(context.Background(), title)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	return nil
+}
+
+// func (fc *FirestoreClient) GetTitleCache() ([]string, error) {
+
+// }

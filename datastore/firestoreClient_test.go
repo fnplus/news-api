@@ -59,3 +59,13 @@ func TestFirestoreClient_AddNewsItems(t *testing.T) {
 		t.Fatalf("Error: %s", err.Error())
 	}
 }
+
+func TestFirestoreClient_CacheNewsTitle(t *testing.T) {
+	cl := FirestoreClient{}
+	cl.init()
+
+	err := cl.CacheNewsTitle([]string{"test1"})
+	if err != nil {
+		fmt.Println("error: ", err.Error())
+	}
+}

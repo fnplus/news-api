@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/fnplus/community-news-bot/datastore"
@@ -10,10 +11,12 @@ var sConfig = getConfig()
 
 func TestWorker_GetNewsWithKeywords(t *testing.T) {
 	worker := NewWorker(sConfig.NewsAPIToken)
-	_, err := worker.GetNewsWithKeywords("golang")
+	arts, err := worker.GetNewsWithKeywords("golang")
 	if err != nil {
 		t.Fatalf("Test failed!\nError: %s", err.Error())
 	}
+
+	fmt.Println(arts)
 }
 
 func TestWorker_PushToDB(t *testing.T) {
