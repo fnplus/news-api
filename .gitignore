@@ -17,8 +17,5 @@ firebase-creds.json
 # Build file
 community-news-bot
 
-# Deploy script
-deploy.sh
-
 # Cache files
 .newscache
