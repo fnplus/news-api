@@ -8,7 +8,7 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/fnplus/community-news-bot/datastore"
+	"github.com/fnplus/news-api/datastore"
 )
 
 var keywordPool []string

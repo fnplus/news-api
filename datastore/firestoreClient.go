@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"firebase.google.com/go"
+	firebase "firebase.google.com/go"
 	"google.golang.org/api/option"
 )
 
@@ -33,7 +33,7 @@ func (fc *FirestoreClient) GetKeywordPool() ([]string, error) {
 	}
 	defer cl.Close()
 
-	snap, err := cl.Collection("community-news").Doc("keyword-pool").Get(context.Background())
+	snap, err := cl.Collection("api").Doc("keyword-pool").Get(context.Background())
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (fc *FirestoreClient) AddNewsItems(newsItems []NewsItem) error {
 	}
 	defer cl.Close()
 
-	ref := cl.Collection("community-news/news/items")
+	ref := cl.Collection("api/result/tips")
 	for _, nItem := range newsItems {
 		ref.Add(context.Background(), nItem)
 	}
@@ -72,7 +72,7 @@ func (fc *FirestoreClient) CacheNewsTitle(titles []string) error {
 	}
 	defer cl.Close()
 
-	ref := cl.Collection("community-news/title-cache/")
+	ref := cl.Collection("api/title-cache/")
 	for _, title := range titles {
 		_, _, err := ref.Add(context.Background(), title)
 		if err != nil {

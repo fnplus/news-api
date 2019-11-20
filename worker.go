@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/fnplus/community-news-bot/datastore"
+	"github.com/fnplus/news-api/datastore"
 
 	"github.com/barthr/newsapi"
 )
