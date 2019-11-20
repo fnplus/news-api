@@ -12,5 +12,17 @@ This service is responsible for fetching the news related to the keywords that t
 
 This procedure is run multiple times in a day. Keep in mind, only the "new" news is sent to the database.
 
+## Installation
+
+1. First, [fork and clone](https://github.com/fnplus/news-api) the repo. This will create a new folder named `news-api`.
+
+2. Navigate to `/news-api` and run:
+
+  ```
+    go get -d
+    go build
+    ./news-api
+  ```
+
 ## How to contribute
 Read [this](contributing.md)
