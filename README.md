@@ -1,4 +1,6 @@
 # news-api
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffnplus%2Fnews-api.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffnplus%2Fnews-api?ref=badge_shield)
+
 A bot/worker/cron/process to fetch &amp; curate all the relevant news content from the web based on the user's subscription.
 
 ## How it works
@@ -24,3 +26,7 @@ This procedure is run multiple times in a day. Keep in mind, only the "new" news
 
 ## How to contribute
 Read [this](contributing.md)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffnplus%2Fnews-api.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffnplus%2Fnews-api?ref=badge_large)
